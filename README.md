@@ -88,13 +88,13 @@ $ go build -o WS-Train-Filtering && ./WS-Train-Filtering
 
 ![Postman](images/postman.png)
 
+I used Insomnia to test the API. Insomnia is a Postman like available for REST, SOAP, GraphQL, and GRPC.
+ An export is available in the repository `/Postman`. Insomnia is OpenSource and available on MacOS, Window, Ubuntu [here](https://insomnia.rest/download).
+
 ### Swagger UI
 
 *You need to run rest container for swagger UI*
 [http://localhost:8081/swagger/index.html](http://localhost:8081/swagger/index.html)
-
-I used Insomnia to test the API. Insomnia is a Postman like available for REST, SOAP, GraphQL, and GRPC.
- An export is available in the repository `/Postman`. 
 
 ## License
 <a href="https://github.com/LacazeThomas/Train-project/blob/main/LICENSE">MIT</a>
