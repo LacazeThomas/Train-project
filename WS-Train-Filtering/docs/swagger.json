@@ -1,0 +1,344 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/tickets/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete tickets by ticketID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TicketID ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "userID",
+                        "name": "userID",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/trains": {
+            "get": {
+                "description": "get trains with filters",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show all trains",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Departure station",
+                        "name": "departure_station",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Arrival station",
+                        "name": "arrival_station",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Return arrival date",
+                        "name": "return_arrival_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Return departure date",
+                        "name": "return_departure_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Outbound arrival date",
+                        "name": "outbound_arrival_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Outbound departure",
+                        "name": "outbound_departure_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number ticket first",
+                        "name": "number_ticket_first",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number ticket business",
+                        "name": "number_ticket_business",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number ticket business",
+                        "name": "number_ticket_business",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.RoundTripTrains"
+                        }
+                    }
+                }
+            }
+        },
+        "/trains/generator": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Generate random trains",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Number of trains to generate",
+                        "name": "number_generate_trains",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/trains/{id}": {
+            "get": {
+                "description": "get train with id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Show a train",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Train ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Train"
+                        }
+                    }
+                }
+            }
+        },
+        "/trains/{id}/reserve": {
+            "post": {
+                "description": "get ticket by trainID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Reserve train",
+                "parameters": [
+                    {
+                        "description": "Type can be Standard=0 Business=1 First=2",
+                        "name": "default",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.TicketInput"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Train ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/trains/{id}/tickets": {
+            "get": {
+                "description": "Get all tickets associated with train",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get tickets by trainID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Train ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Ticket"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/tickets": {
+            "get": {
+                "description": "Get all tickets associated with user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get tickets by userID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Ticket"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controllers.RoundTripTrains": {
+            "type": "object",
+            "properties": {
+                "trainsoutbound": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Train"
+                    }
+                },
+                "trainsreturn": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Train"
+                    }
+                }
+            }
+        },
+        "controllers.TicketInput": {
+            "type": "object",
+            "properties": {
+                "flexible": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Ticket": {
+            "type": "object",
+            "properties": {
+                "flexible": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "trainID": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Train": {
+            "type": "object",
+            "properties": {
+                "arrival_date": {
+                    "type": "string"
+                },
+                "arrival_station": {
+                    "type": "string"
+                },
+                "departure_date": {
+                    "type": "string"
+                },
+                "departure_station": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "number_seat_business": {
+                    "type": "integer"
+                },
+                "number_seat_first": {
+                    "type": "integer"
+                },
+                "number_seat_standard": {
+                    "type": "integer"
+                },
+                "number_ticket_business_available": {
+                    "type": "integer"
+                },
+                "number_ticket_first_available": {
+                    "type": "integer"
+                },
+                "number_ticket_standard_available": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

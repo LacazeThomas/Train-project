@@ -1,0 +1,225 @@
+definitions:
+  controllers.RoundTripTrains:
+    properties:
+      trainsoutbound:
+        items:
+          $ref: '#/definitions/models.Train'
+        type: array
+      trainsreturn:
+        items:
+          $ref: '#/definitions/models.Train'
+        type: array
+    type: object
+  controllers.TicketInput:
+    properties:
+      flexible:
+        type: boolean
+      type:
+        type: integer
+      userID:
+        type: string
+    type: object
+  models.Ticket:
+    properties:
+      flexible:
+        type: boolean
+      id:
+        type: string
+      trainID:
+        type: string
+      type:
+        type: integer
+      userID:
+        type: string
+    type: object
+  models.Train:
+    properties:
+      arrival_date:
+        type: string
+      arrival_station:
+        type: string
+      departure_date:
+        type: string
+      departure_station:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      number_seat_business:
+        type: integer
+      number_seat_first:
+        type: integer
+      number_seat_standard:
+        type: integer
+      number_ticket_business_available:
+        type: integer
+      number_ticket_first_available:
+        type: integer
+      number_ticket_standard_available:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /tickets/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: TicketID ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: userID
+        in: query
+        name: userID
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete tickets by ticketID
+  /trains:
+    get:
+      consumes:
+      - application/json
+      description: get trains with filters
+      parameters:
+      - description: Departure station
+        in: query
+        name: departure_station
+        type: string
+      - description: Arrival station
+        in: query
+        name: arrival_station
+        type: string
+      - description: Return arrival date
+        in: query
+        name: return_arrival_date
+        type: string
+      - description: Return departure date
+        in: query
+        name: return_departure_date
+        type: string
+      - description: Outbound arrival date
+        in: query
+        name: outbound_arrival_date
+        type: string
+      - description: Outbound departure
+        in: query
+        name: outbound_departure_date
+        type: string
+      - description: Number ticket first
+        in: query
+        name: number_ticket_first
+        type: integer
+      - description: Number ticket business
+        in: query
+        name: number_ticket_business
+        type: integer
+      - description: Number ticket business
+        in: query
+        name: number_ticket_business
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.RoundTripTrains'
+      summary: Show all trains
+  /trains/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get train with id
+      parameters:
+      - description: Train ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Train'
+      summary: Show a train
+  /trains/{id}/reserve:
+    post:
+      consumes:
+      - application/json
+      description: get ticket by trainID
+      parameters:
+      - description: Type can be Standard=0 Business=1 First=2
+        in: body
+        name: default
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.TicketInput'
+      - description: Train ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Reserve train
+  /trains/{id}/tickets:
+    get:
+      consumes:
+      - application/json
+      description: Get all tickets associated with train
+      parameters:
+      - description: Train ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Ticket'
+      summary: Get tickets by trainID
+  /trains/generator:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Number of trains to generate
+        in: query
+        name: number_generate_trains
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Generate random trains
+  /users/{id}/tickets:
+    get:
+      consumes:
+      - application/json
+      description: Get all tickets associated with user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Ticket'
+      summary: Get tickets by userID
+swagger: "2.0"

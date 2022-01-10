@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BookingService WSDL service -->
+
+  <service name="Booking" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://booking.thomaslacaze.fr"/>
+      <parameter name="wsdlServiceElement" value="BookingService"/>
+      <parameter name="schemaQualified" value="http://booking.thomaslacaze.fr"/>
+      <parameter name="wsdlServicePort" value="Booking"/>
+      <parameter name="className" value="fr.thomaslacaze.booking.Booking"/>
+      <parameter name="wsdlPortType" value="Booking"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://booking.thomaslacaze.fr" xmlns:retNS="http://booking.thomaslacaze.fr" xmlns:rtns="http://booking.thomaslacaze.fr" xmlns:tns="http://booking.thomaslacaze.fr" name="all" qname="operNS:all" returnQName="retNS:allReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <parameter name="allowedMethods" value="all"/>
+
+      <typeMapping xmlns:ns="http://booking.thomaslacaze.fr" qname="ns:&gt;all" type="java:fr.thomaslacaze.booking.All" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking.thomaslacaze.fr" qname="ns:&gt;allResponse" type="java:fr.thomaslacaze.booking.AllResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://booking.thomaslacaze.fr" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+  </service>
+</deployment>
